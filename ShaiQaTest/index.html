@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <title>Get Candidates</title>
+        <link rel="stylesheet" href="css/styles.css">
+        <script src="js/angular.min.js"></script>
+        <script src="js/app.min.js"></script>
+    </head>
+
+
+    <body>
+
+        <div id="GetCandidatesApp" ng-app="GetCandidatesApp">
+
+
+            <div id="AllAppointments" ng-controller="AppointmentsController" ng-if="appointments.length > 0">
+
+                <div class="avg-grade">Average appoiantment grade: {{ getAvgGrade() }}</div>
+
+                <div ng-repeat="appointment in appointments" class="appointment-one">
+
+                    <div ng-init="appointment.show = false" ng-click="appointment.show = !appointment.show" class="app-header">
+                        <span ng-show="appointment.show">-</span>
+                        <span ng-show="!appointment.show">+</span>
+
+                        Appoitment {{ $index + 1}}
+                    </div>
+
+
+                    <div ng-show="appointment.show" class="app-details">
+
+                        <b>Customer:</b>
+                        <span ng-show="appointment.customer === 'ilya'">Ilya</span>
+                        <span ng-show="appointment.customer === 'alfredo'">Alfredo</span>
+                        <span ng-show="appointment.customer === 'james'">James</span>
+
+                        <br/><b>Date:</b> {{ appointment.date.toLocaleDateString() }} {{appointment.start}}:00 - {{appointment.end}}:00
+
+                        <br/><b>Type:</b>
+                        <span ng-show="appointment.worktype ==='house'">House Cleaning</span>
+                        <span ng-show="appointment.worktype ==='floor'">Floor Polish</span>
+                        <span ng-show="appointment.worktype ==='car'">Car Waxing</span>
+                        <span ng-show="appointment.worktype === 'carpet'">Carpet Cleaning</span>
+
+                        <br/><b>Scheduled By:</b> {{appointment.name}} (grade: {{appointment.grade}})
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+
+
+            <div id="Form" ng-controller="FormController" ng-show="state === 1">
+
+                <div class="form-group">
+                    <label for="Name">Your Name *</label>
+                    <input ng-model="name" autocomplete="off" id="Name" type="text" />
+                    <div class="error-label" ng-show="name.length < 4 && name.length !== 0">Name must be at least 3 characters</div>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="Customer">Customer * (Availability: {{availability[customer].start}} - {{availability[customer].end}} <span ng-show="availability[customer].weekend === false"> - Not on weekend</span>)</label>
+                    <select id="Customer" ng-model="customer">
+                        <option value="james">James</option>
+                        <option value="alfredo">Alfredo</option>
+                        <option value="ilya">Ilya</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="WorkType">Work Type * (Duration: {{ durations[worktype] }} Hours)</label>
+                    <select id="WorkType" ng-model="worktype">
+                        <option value="house">House Cleaning</option>
+                        <option value="floor">Floor Polish</option>
+                        <option value="car">Car Waxing</option>
+                        <option value="carpet">Carpet Cleaning</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="StartDate">Start Date *</label>
+                    <input ng-model="start" autocomplete="off" id="StartDate" type="date" />
+                </div>
+
+                <div class="form-group">
+                    <label for="EndDate">End Date *</label>
+                    <input ng-model="end" autocomplete="off" id="EndDate" type="date" />
+                </div>
+
+                <div id="RequiredField">* Required Field</div>
+
+                <div id="Find" ng-click="getCandidates()">Find Appointments</div>
+
+            </div>
+
+
+
+
+
+
+
+
+
+            <div id="Loading" ng-controller="LoadingController" ng-show="state === 2">
+                Finding Appointments. Please Wait.
+
+                <div id="Cancel" ng-click="$parent.state=1">Cancel</div>
+            </div>
+
+
+
+
+
+
+
+
+
+            <div id="Options" ng-controller="OptionsController" ng-show="state === 3">
+
+                <div id="Saving" ng-init="saving=false" ng-show="saving">Saving Appointment</div>
+
+
+                <div id="HereAreTheResults">
+                    Hey <span id="ResultName"></span>, here are the results:
+                </div>
+
+                <div id="orderBy">
+                    Sort By
+                    <select ng-model="orderField" ng-init="orderField = 'start'" style="width: 70px;">
+                        <option value="start">Grade</option>
+                        <option value="grade">Hour</option>
+                    </select>
+                </div>
+
+                <div class="margintop"></div>
+
+                <div class="result-group" ng-repeat="slots in results">
+
+                    <div ng-init="showGroup=false" ng-click="showGroup = !showGroup" class="slots-for-day">
+                        <span ng-show="showGroup">+</span>
+                        <span ng-show="!showGroup">-</span>
+                        {{ slots.date.toLocaleDateString() }}
+                    </div>
+
+                    <div ng-show="showGroup" class="single-slot" ng-repeat="slot in slots.slots | orderBy:orderField:true" ng-click="selectSlot(slot, slots.date)">
+                        <div class="times">{{slot.start}}:00 - {{slot.end}}:00</div>
+                        <div class="slot-grade" ng-class="{recommended: slot.grade > 80 && slot.grade < 85, ideal: slot.grade > 90}">
+
+                            <span ng-show="slot.grade > 80 && slot.grade < 85">Recommended - </span>
+                            <span ng-show="slot.grade > 90">Ideal - </span>
+
+                            Grade: {{slot.grade}}
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+
+            <div id="Results" ng-controller="ResultController" ng-show="state === 4">
+
+                <div id="succ">Appointment was scheduled!</div>
+
+                <span ng-show="lastSlot.customer === 'ilya'">Ilya</span>
+                <span ng-show="lastSlot.customer === 'alfredo'">Alfredo</span>
+                <span ng-show="lastSlot.customer === 'james'">James</span>
+
+                was notified and should expect a visit on {{ lastSlot.date.toLocaleString() }} {{lastSlot.start}}:00 - {{lastSlot.end}}:00
+
+                (work type:
+                <span ng-show="lastSlot.worktype ==='house'">House Cleaning</span>
+                <span ng-show="lastSlot.worktype ==='floor'">Floor Polish</span>
+                <span ng-show="lastSlot.worktype ==='car'">Car Waxing</span>
+                <span ng-show="lastSlot.worktype === 'carpet'">Carpet Cleaning</span>
+                )
+
+
+                <div id="StartAgain" ng-click="anotherAppointment()">Creat An New Apointmants</div>
+
+
+            </div>
+
+
+
+        </div>
+
+    </body>
+
+
+
+</html>

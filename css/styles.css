@@ -1,0 +1,263 @@
+body {
+    font-family: Arial;
+    background: #f1f1f1;
+    margin: 40px;
+}
+
+
+#GetCandidatesApp {
+    width: 700px;
+    margin: 0 auto;
+    padding: 15px;
+    border-radius: 6px;
+    background: #fff;
+    box-shadow: 0 15px 20px rgba(0, 0, 0, 0.08);
+}
+
+.form-group {
+    padding: 10px 0;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.error-label {
+    font-size: 12px;
+    margin-top: 4px;
+    color: #F44336;
+}
+
+input[type=text],
+input[type=date] {
+    font-family: Arial;
+    font-size: 14px;
+    border-radius: 3px;
+    border: 1px solid #dadada;
+    padding: 4px 8px;
+    width: calc(100% - 16px);
+}
+
+input[type=text] {
+    padding: 7px 8px;
+}
+
+
+select {
+    font-family: Arial;
+    font-size: 14px;
+    border-radius: 3px;
+    border: 1px solid #dadada;
+    background: #fff;
+    height: 31px;
+    width: 100%;
+}
+
+
+#Find {
+    border-radius: 4px;
+    background: #006ec5;
+    color: #fff;
+    text-align: center;
+    padding: 12px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+#Find:hover {
+    background: #055ea5;
+}
+
+
+
+
+#Loading {
+    text-align: center;
+    padding: 50px 0;
+    font-size: 24px;
+}
+
+
+#Cancel {
+    border-radius: 4px;
+    background: #c1c1c1;
+    color: #fff;
+    text-align: center;
+    padding: 12px;
+    cursor: pointer;
+    width: 100px;
+    margin: 50px auto 0 auto;
+    font-size: 16px;
+}
+
+#Cancel:hover {
+    background: #ababab;
+}
+
+
+#RequiredField {
+    font-size: 12px;
+    margin: 15px 0 25px 0;
+}
+
+#HereAreTheResults {
+    position: absolute;
+    top: 70px;
+}
+
+.margintop {
+    margin-top: 60px;
+}
+
+
+.result-group {
+    margin-bottom: 10px;
+    border-radius: 3px;
+    border: 1px solid #d6d6d6;
+    border-bottom: 0;
+}
+
+.slots-for-day {
+    cursor: pointer;
+    padding: 10px;
+    border-bottom: 1px solid #d6d6d6;
+    color: #2196F3;
+    font-size: 18px;
+}
+
+.slots-for-day:hover {
+    background: #eeeeee;
+}
+
+.single-slot {
+    position: relative;
+    cursor: pointer;
+    border-bottom: 1px solid #d6d6d6;
+}
+
+.single-slot:hover {
+    background: #f9f9f9;
+}
+
+.times {
+    position: relative;
+    padding: 10px;
+}
+
+.slot-grade {
+    position: absolute;
+    right: 14px;
+    top: 11px;
+}
+
+.slot-grade {
+    position: absolute;
+    right: 10px;
+    top: 6px;
+    padding: 5px;
+    border-radius: 3px;
+    font-size: 13px;
+}
+
+.ideal {
+    background: #4CAF50;
+    color: #fff;
+}
+
+.recommended {
+    background: #2196F3;
+    color: #fff;
+}
+
+#Results {
+    line-height: 30px;
+    text-align: center;
+    font-size: 18px;
+}
+
+
+#StartAgain {
+    border-radius: 4px;
+    background: #673AB7;
+    color: #fff;
+    text-align: center;
+    padding: 12px;
+    cursor: pointer;
+    width: 200px;
+    margin: 50px auto 0 auto;
+    margin-bottom:20px;
+    font-size: 16px;
+}
+
+#StartAgain:hover {
+    background: #4b2490;
+}
+
+#succ {
+    font-size: 32px;
+    margin-bottom:20px;
+    margin-top: 20px;
+}
+
+
+#AllAppointments {
+    position: fixed;
+    left: 0;
+    width: 200px;
+    font-size: 12px;
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+    background: #fff;
+    padding: 10px;
+    box-shadow: 0 15px 20px rgba(0, 0, 0, 0.08);
+    line-height: 18px;
+    overflow-y: auto;
+    max-height: 360px;
+    top: 40px;
+}
+
+.appointment-one {
+    border-bottom: 1px solid #dadada;
+    padding-bottom: 8px;
+    margin-top: 8px;
+}
+
+.appointment-one:last-child {
+    border-bottom: 0;
+}
+
+.app-header {
+    cursor: pointer;
+    color: #777777;
+    font-weight: bold;
+    font-size: 13px;
+    margin-bottom: 3px;
+}
+
+.app-details {
+    margin-left: 7px;
+}
+
+.avg-grade {
+    padding: 5px;
+    background: #f1f1f1;
+    color: #006ec5;
+    border-radius: 3px;
+}
+
+#orderBy {
+    float: right;
+    margin-top: -51px;
+}
+
+#Saving {
+    position: fixed;
+    top: 60px;
+    width: 700px;
+    padding: 10px 0;
+    border-radius: 6px;
+    background: #FFEB3B;
+    text-align: center;
+    z-index: 10;
+}
